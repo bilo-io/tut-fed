@@ -8,7 +8,7 @@ This article is a guide to conquering all the caveats mentioned above. I will be
 
 # Quickstart
 
-If you want the source, code, it is available on **Github** under [`bilo-io/tut-fed`](). You can clone, setup and run it with the following console commands:
+If you want the source, code, it is available on **Github** under [`bilo-io/tut-fed`](https://github.com/bilo-io/tut-fed). You can clone, setup and run it with the following console commands:
 
 - `git clone https://github.com/bilo-io/tut-fed.git`
 - `cd ./tut-fed`
@@ -37,7 +37,7 @@ As such this tutorial is structured in the following logical flow:
 
 1. **Project Structure** - The a basic, manageable folder structure we will create throughout the tutorial.
 2. **Example WebApp** - A basic web application consisting of the minimal amount of files.
-3. [**Node**](#node) - Adding a package manager, dependencies, and a server to serve up the webapp.
+3. **Node**- Adding a package manager, dependencies, and a server to serve up the webapp.
 4. **Webpack** - Adding a webapp bundler, allowing for development mode and production packaging.
 
 
