@@ -2,9 +2,9 @@
 
 |||
 |:--|:--|
-|![](https://raw.githubusercontent.com/bilo-io/tutorials/master/Logos/FED/fed-logo-dark.png)|Have you ever wanted to start building frontend web applications, but always hit a road block at one point or another? If you have experienced the pain of constantly reloading an `index.html` page to see your changes? Is it possible that you don't even know how to get started? Perhaps you already have a basic project set up, but you don't know how to bundle it for production?|
+|![](https://raw.githubusercontent.com/bilo-io/tutorials/master/Logos/FED/fed-logo-dark.png)|Have you ever wanted to start building frontend web applications, but always hit a road block at one point or another? Have you experienced the pain of constantly reloading an `index.html` page to see your changes? Is it possible that you don't even know how to get started? Perhaps you already have a basic project, but you don't know how to bundle it for production?|
 
-This article is a guide to conquering all the caveats mentioned above. I will begin with a basic project structure, using NodeJS and Webpack.
+If you have experienced any of the pain points above, then keep reading. This article is a guide to conquering all the caveats mentioned above. I will begin with a basic project structure, using NodeJS and Webpack.
 
 # Quickstart
 
