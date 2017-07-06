@@ -1,0 +1,29 @@
+{
+  "name": "tut-fed",
+  "version": "1.0.0",
+  "description": "a starter tutorial and source for frontend dev with node, express and webpack",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --inline --progress --port 6565",
+    "build": "webpack -p",
+    "serve": "node server.js",
+    "clean": "rm -rf ./dist",
+    "setup": "npm install && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bilo-io/tut-fed.git"
+  },
+  "author": "Bilo Lwabona",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bilo-io/tut-fed/issues"
+  },
+  "homepage": "https://github.com/bilo-io/tut-fed#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
