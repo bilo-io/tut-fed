@@ -1,28 +1,43 @@
 # Tutorial: Frontend Development
 
-![](https://raw.githubusercontent.com/bilo-io/tutorials/master/Logos/FED/fed-logo-dark.png)
-
-Have you ever wanted to start building frontend web applications, but always hit a road block at one point or another? If you have experienced the pain of constantly reloading an `index.html` page to see your changes? Is it possible that you don't even know how to get started? Perhaps you already have a basic project set up, but you don't know how to bundle it for production?
+|||
+|:--|:--|
+|![](https://raw.githubusercontent.com/bilo-io/tutorials/master/Logos/FED/fed-logo-dark.png)|Have you ever wanted to start building frontend web applications, but always hit a road block at one point or another? If you have experienced the pain of constantly reloading an `index.html` page to see your changes? Is it possible that you don't even know how to get started? Perhaps you already have a basic project set up, but you don't know how to bundle it for production?|
 
 This article is a guide to conquering all the caveats mentioned above. I will begin with a basic project structure, using NodeJS and Webpack.
 
-### Goals
+# Quickstart
+
+If you want the source, code, it is available on **Github** under [`bilo-io/tut-fed`](). You can clone, setup and run it with the following console commands:
+
+- `git clone https://github.com/bilo-io/tut-fed.git`
+- `cd ./tut-fed`
+- `npm install`
+- `npm start`
+- [http://localhost:6565](http://localhost:6565)
+
+> **NOTE**: 
+> - While `npm start` uses the Webpack DevServer, using the `src` folder ... use this while developing.
+> - The express server can be used with `node server.js` which serves the `dist` (distribution/production folder).
+> - The `dist` folder is generated with the  `npm run build` command.
+
+# Overview
 
 There are certain goals set out, which will be accomplished by the end of this article. The purpose of this article is for a frontend developer:
 
+## Goals
 - to have a webapp that dynamically reloads while changes happen in files during development
 - to easily accomplish tasks with command line scripts (e.g. install dependencies, start app, create prod build, etc.)
 - to use a package manager for 3rd party libraries
 - to use a module and application bundler
 
+## Structure
+
 As such this tutorial is structured in the following logical flow:
 
 1. **Project Structure** - The a basic, manageable folder structure we will create throughout the tutorial.
-
 2. **Example WebApp** - A basic web application consisting of the minimal amount of files.
-
-3. [**Node**](#3.-node) - Adding a package manager, dependencies, and a server to serve up the webapp.
-
+3. [**Node**](#node) - Adding a package manager, dependencies, and a server to serve up the webapp.
 4. **Webpack** - Adding a webapp bundler, allowing for development mode and production packaging.
 
 
@@ -55,7 +70,7 @@ tut-fed/                    # project root
 |`artifact/`| (generated) application package with server, to test prod deployment locally|
 |`node_modules/`| (generated) Node dependencies, 3rd party packages the webapp requires to function|
 
-For now, let's focus on the contents of the `src` folder. 
+For now, let's focus on the contents of the `src` folder, where we create a basic web app with basic `index.html`, `style.css` and `app.js` files. 
 
 # 2. Example WebApp
 
@@ -85,7 +100,7 @@ We will begin this tutorial with a simple `index.html` file as the entry point o
                 <label>FED Tutorial 101</label>
             </div>
             <div class="app-content">
-                <p>Hello FEDs,</p>
+                <p><b>Hello FEDs</b></p>
                 <p>Now you know how to make a basic web site.</p>
             </div>
         </div>
@@ -94,7 +109,7 @@ We will begin this tutorial with a simple `index.html` file as the entry point o
 </html>
 ```
 
-Open the `index.html` file in a browser and you should see the message "Hello FEDs" displayed in the window. To customize the appearance, add style file to accompany the styles the header `h1`. You can also apply many other style updates with CSS, for example box-shadow, for which I use this [Box Shadow Generator]](http://www.cssmatic.com/box-shadow).
+Open the `index.html` file in a browser and you should see the message **"Hello FEDs"** displayed in the window. To customize the appearance, add style file to accompany the styles the header `h1`. You can also apply many other style updates with CSS, for example box-shadow, for which I use this [Box Shadow Generator]](http://www.cssmatic.com/box-shadow).
 
 `src/style.css`:
 ```css
@@ -149,16 +164,25 @@ label {
 Refresh the page, and you should see the header style has changed. This is a minimal example of a webapp, which will be used and edited throughout the rest of the article.
 
 
-# 3. Node
+# 3. [Node](#node)
 
-The first thing you should probably do is make your application a Node package, if you haven't done so already. This will be useful with installing dependencies using the [Node Package Manager](), as well as running scripts to perform certain tasks with the webapp.
+Here we will turn the webapp into a Node package. This will be useful with installing dependencies using the [Node Package Manager](), as well as running scripts to perform certain tasks with the webapp.
 
-In the root of your application run the following command, and enter all required prompts (author name, etc.):
+> **NOTE:**
+> - conventionally, you would have to search the web for the `.js` or `.min.js` files, and put them into your `lib` folder or something like that.
+> - `npm` (Node Package Manager) handles all this laborious task for you.
+
+## Creating a Node Package
+
+In the root of your application run the following command, and enter the desired prompts (author name, etc.):
 
 - `npm init`
 
+> **NOTE** you can skip all the prompts by repeatedly pressing `Enter` (return key).
 
-Next, we will add [Express]() to serve the webapp locally on a port. To install Express, run:
+## Express Server
+
+Next, we will add [Express]() to serve the webapp locally on a port. Basically, all that happens here is that express will serve a folder containing an index.html file. This server will be serving up the webapp in the production environment. To install Express, run:
 
 - `npm install express --save`
 
@@ -243,7 +267,12 @@ And that's it... now you're good to go.
 
 ## Configure your Webapp for Webpack
 
-Now you need to configure Webpack, in order to tell it which files to bundle. Every Webpack configuration requires at the very least an `entry` and `output` node. Create the following file on the root.
+Now you need to configure Webpack, in order to tell it which files to bundle. Every Webpack configuration requires at the very least an `entry` and `output` node. 
+
+> - `entry` specifies the entry point (`.js`) from which Webpack bundles everything that is imported, including images, libraries, etc. 
+> - `output` is the directory where you want to put the bundle generated by Webpack (`dist/`). 
+
+Create the following Webpack configuration file on the root:
 
 `webpack.config.js`:
 ```javascript
@@ -255,11 +284,26 @@ var DIST = path.resolve(__dirname, 'dist/');
 var SRC = path.resolve(__dirname, 'src/');
 
 var config = {
-    entry: SRC + '/app.js',
+    entry: {
+        path: SRC + '/app.js'
+    },
     output: {
         path: DIST,
         publicPath: 'http://localhost:6565/',
         filename: 'app.js'
+    },
+    module: {
+        rules: [{   
+                // used to load CSS
+                test: /\.css$/,
+                loaders: ['style-loader', 'css-loader'],
+                exclude: /node_modules/
+            }, {
+                // used to load image files
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+                loader: 'file-loader?name=assets/[name].[ext]'
+            }
+        ]
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -281,7 +325,23 @@ In this file we tell webpack to use the source folder `src/` and bundle it into 
 
 - `npm install html-webpack-plugin --save-dev`
 
-Lastly, add some scripts to make your life a little easier. You can add aliases for commands, which will reside in `package.json` under the `scripts` node. They need to be run with the command `npm run {Script Name}`
+
+We need to specify to Webpack how to load `.css`, image files, etc., which is done with the some plugins, that you need to install:
+
+- `npm install style-loader`
+- `npm install css-loader`
+- `npm install file-loader --save-dev`
+
+> **NOTE:**
+>
+> `file-loader`: loads files into the `assets/` folder of the bundle. which means you need to reference 
+them from there, in the source code (except when you `require` or `import` them)
+
+
+
+## Creating the Production Build
+
+Lastly, add some scripts to make our lives a little easier. We can add aliases for commands, which will reside in `package.json` under the `scripts` node. They need to be run with the command `npm run {Script Name}`
 
 `package.json`:
 ```javascript
@@ -294,7 +354,9 @@ Lastly, add some scripts to make your life a little easier. You can add aliases 
   },
 ```
 
-Now that we can create a production package with the `build` script, the server should point to that directory (`dist/`) instead.
+Now we can run the `webpack-dev-server` with the command `npm start`. In this dev mode, any edits that you make recompile the app and serve the updated without having to manully reload the webapp after every change.
+
+Furthermore, we can create a production package with the `build` script, the server should point to that directory (`dist/`) instead.
 
 `server.js`:
 ```javascript
@@ -307,3 +369,4 @@ server.use(express.static(__dirname + '/dist/'));
 
 You can easily test this by running `node server.js` from your terminal.
 
+> **NOTE** you need to run `npm run build` first, to generate the `dist` folder.
