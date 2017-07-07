@@ -8,7 +8,7 @@ If you have experienced any of the pain points above, then keep reading. This ar
 
 # Quickstart
 
-If you want the source, code, it is available on **Github** under [`bilo-io/tut-fed`](https://github.com/bilo-io/tut-fed). You can clone, setup and run it with the following console commands:
+If you want the source code, find it on [`https://github.com/bilo-io/tut-fed`](https://github.com/bilo-io/tut-fed). You can clone, setup and run it with the following console commands:
 
 - `git clone https://github.com/bilo-io/tut-fed.git`
 - `cd ./tut-fed`
