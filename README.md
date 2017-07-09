@@ -148,6 +148,10 @@ label {
     box-shadow: 0px 6px 20px -5px rgba(0,0,0,0.75);
     z-index: 1;
 }
+.app-titlebar:hover {
+    color: white;
+    cursor: pointer;
+}
 
 .app-content {
     position: fixed;
@@ -164,7 +168,7 @@ label {
 Refresh the page, and you should see the header style has changed. This is a minimal example of a webapp, which will be used and edited throughout the rest of the article.
 
 
-# 3. [Node](#node)
+# 3. Node
 
 Here we will turn the webapp into a Node package. This will be useful with installing dependencies using the [Node Package Manager](), as well as running scripts to perform certain tasks with the webapp.
 
@@ -249,20 +253,17 @@ Make sure to have Webpack installed globally:
 
 - `npm install -g webpack`
 
-Install webpack and the [`webpack-dev-server`]():
+Now you need to add webpack to your actual webapp. 
+It is recommended to install the [`webpack-dev-server`](https://www.npmjs.com/package/webpack-dev-server) for continous development (refresh on save).
+Another useful tool is the [`webpack-bundle-analyzer`](https://www.npmjs.com/package/webpack-bundle-analyzer) to inspect what is in the bundle.
 
-- `npm install webpack webpack-dev-server --save-dev`
-
-It is recommended to install the [`webpack-dev-server`]():
-
+- `npm install webpack --save-dev`
 - `npm install webpack-dev-server --save-dev`
-
-Another useful tool is the [`webpack-bundle-analyzer`]():
 - `npm install webpack-bundle-analyzer --save-dev`
 
 And that's it... now you're good to go.
 
->**NOTE**: we installed all of the above to the dev dependencies, because they are only used for development and to bundle the application. The production bundle does not need any of these dependencies, as it only needs to serve up the application code, and all `required` libraries (imported in the `src` folder).
+>**NOTE**: we installed all of the above to the `devDependencies`, because they are only used for development and to bundle the application. The production bundle does not need any of these dependencies, as it only needs to serve up the application code, and all `required` libraries (imported in the `src` folder).
 
 
 ## Configure your Webapp for Webpack
@@ -332,9 +333,7 @@ We need to specify to Webpack how to load `.css`, image files, etc., which is do
 - `npm install css-loader`
 - `npm install file-loader --save-dev`
 
-> **NOTE:**
->
-> `file-loader`: loads files into the `assets/` folder of the bundle. which means you need to reference 
+> **NOTE:** `file-loader` loads files into the `assets/` folder of the bundle. which means you need to reference 
 them from there, in the source code (except when you `require` or `import` them)
 
 
@@ -369,4 +368,252 @@ server.use(express.static(__dirname + '/dist/'));
 
 You can easily test this by running `node server.js` from your terminal.
 
-> **NOTE** you need to run `npm run build` first, to generate the `dist` folder.
+> **NOTE:** you need to run `npm run build` first, to generate the `dist` folder.
+
+# SASS
+
+There are several CSS preprocessors, that make styling your website/webapp a bit easier, two of which are [Sass & LESS](https://css-tricks.com/sass-vs-less/). Here we will be focusing on [Sass](http://sass-lang.com/), which requires Ruby in order to be installed.
+
+### Installing SASS
+- [Install SASS] (http://sass-lang.com/install)
+
+You can verify whether it has been installed by running the command `sass -v` in a terminal.
+
+Once this works, sass has been setup on your machine and the next step is to integrate it in the webapp.
+
+### Adding SASS to Webapp
+
+Since Webpack bundles the application, and we use the Webpack Dev Server for development, we need to modify our `webpack.config.js` to understand SASS files. 
+
+`webpack.config.js`:
+
+```javascript
+    // Modify the css module rule as it is below
+    // ...
+    rules: [
+        {
+            test: /\.(css|scss)$/,
+            loaders: [
+                'style-loader', 'css-loader', 'sass-loader'
+            ],
+            exclude: /node_modules/
+        },
+    // ...
+
+```
+>**NOTE:** Each time you modify the `webpack.config.js` you need to restart the webapp, in order to see the new configuration in effect.
+
+Essentially, all we need to do is add a `sass-loader` plugin, as well as `node-sass`:
+
+- `npm install sass-loader --save-dev`
+- `npm install node-sass --save-dev`
+
+>**NOTE:** When you switch between node versions, your `node-sass` typically has to be rebuilt. To do this, simply run `npm rebuild node-sass`.
+
+Now the webapp should be all set up. In the next section, we modify the `css` to be `scss`.
+
+### Turning CSS into SASS
+
+Firstly, rename the file `style.css` (and all references to it) to `style.scss`. Now, it is important to note that SASS is a superset of CSS, meaning that all CSS is valid SASS. There are many things that can be done with SASS, such as nesting of classes, creating variables, creating functions (mixins), using class inheritance, and more.
+
+See the official [guide to SASS](http://sass-lang.com/guide) with core features, and a lovely [Cheat Sheet](https://sass-cheatsheet.brunoscopelliti.com/) that quickly shows you the SASS equivalent of CSS snippets.
+
+We are going to modify the contents of  our `style.scss` to use some SASS features. See the end result of the style file here, and below that an explanation of how the CSS can be transformed into SASS.
+
+
+```scss
+// SASS: Variables - Colors
+$col-shadow: rgba(0,0,0,0.75);
+$col-text: #333;
+$col-background: #eee;
+$col-active: #00adee;
+
+// SASS: Variables - Dimensions
+$dim-image: 2rem;
+$dim-font: 1.5rem;
+$dim-titlebar: 4rem;
+$dim-padding: 1em;
+
+// SASS: Mixins
+@mixin drop-shadow($color) {
+    -webkit-box-shadow: 0px 6px 20px -5px $color;
+    -moz-box-shadow: 0px 6px 20px -5px $color;
+    box-shadow: 0px 6px 20px -5px $color;
+}
+
+.black-on-white {
+    color: $col-text;
+    background: $col-background;
+}
+
+body {
+    color: $col-active;
+    background: $col-text;
+    font-family: Quicksand, sans-serif;
+    padding: $dim-padding;
+}
+
+.app-titlebar {
+    // SASS: mixin usage
+    @include drop-shadow($col-shadow);
+
+    position: fixed;
+    display: flex;
+    height: $dim-titlebar;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    // SASS: nested classes (img & label)
+    img {
+        width: $dim-image;
+        height: $dim-image;
+        margin-left: $dim-image;
+        margin-right: $dim-image;
+        margin-top: $dim-padding;
+    }
+    label {
+        font-size: $dim-font;
+        line-height: $dim-titlebar;
+    }
+
+    //SASS: multiple states
+    &:hover {
+        color: white;
+        cursor: pointer;
+    }
+}
+
+.app-content {
+    // SASS: inheritance
+    @extend .black-on-white;
+
+    position: fixed;
+    padding: $dim-padding;
+    height: calc(100vh - #{$dim-titlebar});
+    width: 100vw;
+    top: $dim-titlebar;
+    left: 0;
+}
+```
+
+
+First, we create variables for the colors & sizes (or dimensions). Sass variables are created with the notation `$var-name: value`. As such, these are our variables.
+
+```scss
+// SASS: Variables - Colors
+$col-shadow: rgba(0,0,0,0.75);
+$col-text: #333;
+$col-background: #eee;
+$col-active: #00adee;
+
+// SASS: Variables - Dimensions
+$dim-image: 2rem;
+$dim-font: 1.5rem;
+$dim-titlebar: 4rem;
+$dim-padding: 1em;
+
+// Example Usage:
+.some-class {
+    color: $col-text;
+    background: $col-background;
+    height: $dim-titlebar;
+    padding: $dim-padding;
+}
+
+```
+
+Now let's consider the `.app-content` class first, as there is less going on here.
+
+1. We position the app-content to be right underneath the titlebar on the y-axis, and to fill out the rest of the browser window.
+
+```scss
+.app-content {
+    // ...
+    top: $dim-titlebar;
+    height: calc(100vh - #{$dim-titlebar});
+    // ...
+}
+```
+
+>**NOTE:** when performing calculations, you need to extract the actual value of the variable, using `#{ $var }`.
+
+2. Furthermore, the app uses black text on a white background, which could well be used on some other classes too. Therefore, we create a `black-on-white` class and extend our app-content using that new class.
+
+```scss
+.black-on-white {
+    color: $col-text;
+    background: $col-background;
+}
+
+// SASS: Inheritance
+.app-content {
+    // ...
+    @extend .black-on-white;
+    // ...
+}
+```
+Now we can move on to the more complex titlebar. 
+
+1. The first thing we could do is make the `<img />` and `<label></label>` tags be specific to the title bar class. All you need to do is drag the styles of `img` & `label` into the scope of `.app-titlebar`:
+```scss
+.app-titlebar {
+    // ...
+    // SASS: nested classes (img & label)
+    img {
+        width: $dim-image;
+        height: $dim-image;
+        margin-left: $dim-image;
+        margin-right: $dim-image;
+        margin-top: $dim-padding;
+    }
+    label {
+        font-size: $dim-font;
+        line-height: $dim-titlebar;
+    }
+    // ...
+}
+```
+
+2. Then we bring the `:hover` state of the `app-titlebar` into it's class scope as well, using the following notation:
+.app-titlebar {
+    // ...
+    //SASS: multiple states
+    &:hover {
+        color: white;
+        cursor: pointer;
+    }
+    
+}
+
+3. Lastly, we add a mixin for the `drop-shadow`, in case we might want to use it elsewhere, but with a different color:
+
+```scss
+// SASS: Mixin
+@mixin drop-shadow($color) {
+    -webkit-box-shadow: 0px 6px 20px -5px $color;
+    -moz-box-shadow: 0px 6px 20px -5px $color;
+    box-shadow: 0px 6px 20px -5px $color;
+}
+// Example Usage:
+.some-class {
+    @include drop-shadow(#00adee);
+}
+```
+
+Try to change some of variables and see how this affects the application. This is only scratching the surface of SASS. Now the fundamentals of frontend web development have been covered. The next set of tutorials will be making use of frameworks and libraries such as Angular, React and Leaflet.
+
+# References
+
+- Node
+    - [NodeJS](https://nodejs.org/en/)
+    - [ExpressJS](https://expressjs.com/)
+- Webpack
+    - [Webpack](https://webpack.js.org/)
+    - [Webpack Dev Server](https://www.npmjs.com/package/webpack-dev-server)
+    - [Webpack Bundle Analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer)
+- SASS
+    - [SASS Guide](http://sass-lang.com/guide)
+    - [SASS vs LESS](https://css-tricks.com/sass-vs-less/)
+    - [SASS Installation](http://sass-lang.com/install)

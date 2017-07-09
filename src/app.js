@@ -1,2 +1,2 @@
-require('./style.css');
+require('./style.scss');
 require('./favicon.ico');
