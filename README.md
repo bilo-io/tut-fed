@@ -35,11 +35,12 @@ There are certain goals set out, which will be accomplished by the end of this a
 
 As such this tutorial is structured in the following logical flow:
 
-1. **Project Structure** - The a basic, manageable folder structure we will create throughout the tutorial.
-2. **Example WebApp** - A basic web application consisting of the minimal amount of files.
-3. **Node**- Adding a package manager, dependencies, and a server to serve up the webapp.
-4. **Webpack** - Adding a webapp bundler, allowing for development mode and production packaging.
-
+1. [**Project Structure**](#1-project-structure) - The a basic, manageable folder structure we will create throughout the tutorial.
+2. [**Example WebApp**](#2-example-webapp) - A basic web application consisting of the minimal amount of files.
+3. [**Node**](#3-node)- Adding a package manager, dependencies, and a server to serve up the webapp.
+4. [**Webpack**](#4-webpack) - Adding a webapp bundler, allowing for development mode and production packaging.
+5. [**SASS**](#5-sass) - Adding Sass, a CSS precompiler to make styling easier and more maintainable.
+6. [**References**](#references) - A useful set of references that were used by this tutorial.
 
 # 1. Project Structure
 
@@ -95,7 +96,7 @@ We will begin this tutorial with a simple `index.html` file as the entry point o
 
     <body>
         <div id="app">
-            <div class="app-titlebar">
+            <div class="app-navbar">
                 <img src="./favicon.ico" />
                 <label>FED Tutorial 101</label>
             </div>
@@ -136,7 +137,7 @@ label {
     font-family: Quicksand, sans-serif;
 }
 
-.app-titlebar {
+.app-navbar {
     position: fixed;
     display: flex;
     top: 0;
@@ -148,7 +149,7 @@ label {
     box-shadow: 0px 6px 20px -5px rgba(0,0,0,0.75);
     z-index: 1;
 }
-.app-titlebar:hover {
+.app-navbar:hover {
     color: white;
     cursor: pointer;
 }
@@ -431,7 +432,7 @@ $col-active: #00adee;
 // SASS: Variables - Dimensions
 $dim-image: 2rem;
 $dim-font: 1.5rem;
-$dim-titlebar: 4rem;
+$dim-navbar: 4rem;
 $dim-padding: 1em;
 
 // SASS: Mixins
@@ -453,13 +454,13 @@ body {
     padding: $dim-padding;
 }
 
-.app-titlebar {
+.app-navbar {
     // SASS: mixin usage
     @include drop-shadow($col-shadow);
 
     position: fixed;
     display: flex;
-    height: $dim-titlebar;
+    height: $dim-navbar;
     width: 100vw;
     top: 0;
     left: 0;
@@ -475,7 +476,7 @@ body {
     }
     label {
         font-size: $dim-font;
-        line-height: $dim-titlebar;
+        line-height: $dim-navbar;
     }
 
     //SASS: multiple states
@@ -491,9 +492,9 @@ body {
 
     position: fixed;
     padding: $dim-padding;
-    height: calc(100vh - #{$dim-titlebar});
+    height: calc(100vh - #{$dim-navbar});
     width: 100vw;
-    top: $dim-titlebar;
+    top: $dim-navbar;
     left: 0;
 }
 ```
@@ -511,14 +512,14 @@ $col-active: #00adee;
 // SASS: Variables - Dimensions
 $dim-image: 2rem;
 $dim-font: 1.5rem;
-$dim-titlebar: 4rem;
+$dim-navbar: 4rem;
 $dim-padding: 1em;
 
 // Example Usage:
 .some-class {
     color: $col-text;
     background: $col-background;
-    height: $dim-titlebar;
+    height: $dim-navbar;
     padding: $dim-padding;
 }
 
@@ -526,13 +527,13 @@ $dim-padding: 1em;
 
 Now let's consider the `.app-content` class first, as there is less going on here.
 
-1. We position the app-content to be right underneath the titlebar on the y-axis, and to fill out the rest of the browser window.
+1. We position the app-content to be right underneath the navbar on the y-axis, and to fill out the rest of the browser window.
 
 ```scss
 .app-content {
     // ...
-    top: $dim-titlebar;
-    height: calc(100vh - #{$dim-titlebar});
+    top: $dim-navbar;
+    height: calc(100vh - #{$dim-navbar});
     // ...
 }
 ```
@@ -554,11 +555,11 @@ Now let's consider the `.app-content` class first, as there is less going on her
     // ...
 }
 ```
-Now we can move on to the more complex titlebar. 
+Now we can move on to the more complex navbar. 
 
-1. The first thing we could do is make the `<img />` and `<label></label>` tags be specific to the title bar class. All you need to do is drag the styles of `img` & `label` into the scope of `.app-titlebar`:
+1. The first thing we could do is make the `<img />` and `<label></label>` tags be specific to the title bar class. All you need to do is drag the styles of `img` & `label` into the scope of `.app-navbar`:
 ```scss
-.app-titlebar {
+.app-navbar {
     // ...
     // SASS: nested classes (img & label)
     img {
@@ -570,14 +571,14 @@ Now we can move on to the more complex titlebar.
     }
     label {
         font-size: $dim-font;
-        line-height: $dim-titlebar;
+        line-height: $dim-navbar;
     }
     // ...
 }
 ```
 
-2. Then we bring the `:hover` state of the `app-titlebar` into it's class scope as well, using the following notation:
-.app-titlebar {
+2. Then we bring the `:hover` state of the `app-navbar` into it's class scope as well, using the following notation:
+.app-navbar {
     // ...
     //SASS: multiple states
     &:hover {

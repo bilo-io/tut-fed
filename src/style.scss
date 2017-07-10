@@ -7,7 +7,7 @@ $col-active: #00adee;
 // SASS: Variables - Dimensions
 $dim-image: 2rem;
 $dim-font: 1.5rem;
-$dim-titlebar: 4rem;
+$dim-navbar: 4rem;
 $dim-padding: 1em;
 
 // SASS: Mixins
@@ -29,13 +29,13 @@ body {
     padding: $dim-padding;
 }
 
-.app-titlebar {
+.app-navbar {
     // SASS: mixin usage
     @include drop-shadow($col-shadow);
 
     position: fixed;
     display: flex;
-    height: $dim-titlebar;
+    height: $dim-navbar;
     width: 100vw;
     top: 0;
     left: 0;
@@ -51,7 +51,7 @@ body {
     }
     label {
         font-size: $dim-font;
-        line-height: $dim-titlebar;
+        line-height: $dim-navbar;
     }
 
     //SASS: multiple states
@@ -67,8 +67,8 @@ body {
 
     position: fixed;
     padding: $dim-padding;
-    height: calc(100vh - #{$dim-titlebar});
+    height: calc(100vh - #{$dim-navbar});
     width: 100vw;
-    top: $dim-titlebar;
+    top: $dim-navbar;
     left: 0;
 }
