@@ -27,9 +27,10 @@ The webapp you will build in this tutorial looks like this:
 
 # Overview
 
+## Goals
+
 There are certain goals set out, which will be accomplished by the end of this article. The purpose of this article is for a frontend developer:
 
-## Goals
 - to have a webapp that dynamically reloads while changes happen in files during development
 - to easily accomplish tasks with command line scripts (e.g. install dependencies, start app, create prod build, etc.)
 - to use a package manager for 3rd party libraries
@@ -43,7 +44,7 @@ As such this tutorial is structured in the following logical flow:
 2. [**Example WebApp**](#2-example-webapp) - A basic web application consisting of the minimal amount of files.
 3. [**Node**](#3-node)- Adding a package manager, dependencies, and a server to serve up the webapp.
 4. [**Webpack**](#4-webpack) - Adding a webapp bundler, allowing for development mode and production packaging.
-5. [**SASS**](#5-sass) - Adding Sass, a CSS precompiler to make styling easier and more maintainable.
+5. [**SASS**](#5-sass) - Adding Sass (a CSS precompiler) to make styling easier and more maintainable.
 6. [**References**](#references) - A useful set of references that were used by this tutorial.
 
 # 1. Project Structure
