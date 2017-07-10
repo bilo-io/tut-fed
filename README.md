@@ -14,12 +14,16 @@ If you want the source code, find it on [`https://github.com/bilo-io/tut-fed`](h
 - `cd ./tut-fed`
 - `npm install`
 - `npm start`
-- [http://localhost:6565](http://localhost:6565)
+- [http://localhost:8080](http://localhost:8080)
 
 > **NOTE**: 
 > - While `npm start` uses the Webpack DevServer, using the `src` folder ... use this while developing.
 > - The express server can be used with `node server.js` which serves the `dist` (distribution/production folder).
 > - The `dist` folder is generated with the  `npm run build` command.
+
+The webapp you will build in this tutorial looks like this:
+
+![](./docs/ss-webapp.png)
 
 # Overview
 
@@ -98,7 +102,7 @@ We will begin this tutorial with a simple `index.html` file as the entry point o
         <div id="app">
             <div class="app-navbar">
                 <img src="./favicon.ico" />
-                <label>FED Tutorial 101</label>
+                <label>Front End Dev</label>
             </div>
             <div class="app-content">
                 <p><b>Hello FEDs</b></p>
@@ -203,7 +207,7 @@ Now we need to serve up the folder containing the webapp, for which we need to a
 var express = require('express');
 var server = express();
 
-let port = process.env.port || 6565;
+let port = process.env.port || 8080;
 server.use(express.static(__dirname + '/src/'));
 server.listen(port, '0.0.0.0');
 console.log('...listening on port: ' + port);
@@ -211,7 +215,7 @@ console.log('...listening on port: ' + port);
 
 You can test this file by running the following command in your terminal:
 - `node server.js`
-The terminal should say `... listening on port 6565`, so try opening [http://localhost:6565](http://localhost:6565) in your browser, and you should see the webapp.
+The terminal should say `... listening on port 8080`, so try opening [http://localhost:8080](http://localhost:8080) in your browser, and you should see the webapp.
 
 Lastly, let's make use of the npm scripts. Make the following update to
 
@@ -291,7 +295,7 @@ var config = {
     },
     output: {
         path: DIST,
-        publicPath: 'http://localhost:6565/',
+        publicPath: 'http://localhost:8080/',
         filename: 'app.js'
     },
     module: {
@@ -346,7 +350,7 @@ Lastly, add some scripts to make our lives a little easier. We can add aliases f
 `package.json`:
 ```javascript
 "scripts": {
-    "start": "webpack-dev-server --inline --progress --port 6565",
+    "start": "webpack-dev-server --inline --progress --port 8080",
     "build": "webpack -p",
     "serve": "node server.js",
     "clean": "rm -rf ./dist",
@@ -371,7 +375,7 @@ You can easily test this by running `node server.js` from your terminal.
 
 > **NOTE:** you need to run `npm run build` first, to generate the `dist` folder.
 
-# SASS
+# 5. SASS
 
 There are several CSS preprocessors, that make styling your website/webapp a bit easier, two of which are [Sass & LESS](https://css-tricks.com/sass-vs-less/). Here we will be focusing on [Sass](http://sass-lang.com/), which requires Ruby in order to be installed.
 
