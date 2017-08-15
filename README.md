@@ -108,6 +108,11 @@ We will begin this tutorial with a simple `index.html` file as the entry point o
             <div class="app-content">
                 <p><b>Hello FEDs</b></p>
                 <p>Now you know how to make a basic web site.</p>
+                <p>
+                    <input id="name-input" type="text" placeholder="enter your name"/>
+                    <button id="hello-button">Say Hello</button>
+                    <button id="adios-button">Say Adios</button>
+                </p>
             </div>
         </div>
     </body>
