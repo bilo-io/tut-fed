@@ -2,16 +2,14 @@ require('./style.scss');
 require('./favicon.ico');
 
 sayHello = () => {
-    let name = document.getElementById('name-input').value;
-    alert('Hello ' + name);
+    alert('Hello ' + document.getElementById('name').value);
 }
 
-var sayAdios = function (name) {
-    let name = document.getElementById('name-input').innerHTML;
-    alert('Adios' + name)
+var sayAdios = function () {
+    alert('Adios' + document.getElementById('name').innerHTML);
 }
 
 window.onload = () => {
-    document.getElementById('hello-button').onclick = sayHello;
-    document.getElementById('adios-button').onclick = sayAdios;
+    document.getElementById('hello').onclick = sayHello;
+    document.getElementById('adios').onclick = sayAdios;
 }
