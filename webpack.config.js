@@ -24,7 +24,7 @@ var config = {
                 exclude: /node_modules/
             }, {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-                loader: 'file-loader?name=assets/[name].[ext]'
+                loader: 'file-loader?name=[name].[ext]'
             }
         ]
     },

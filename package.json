@@ -9,7 +9,7 @@
   "scripts": {
     "start": "webpack-dev-server --inline --progress --port 8080",
     "build": "webpack -p",
-    "serve": "node server.js",
+    "serve": "nodemon ./server.js",
     "clean": "rm -rf ./dist",
     "setup": "npm install && npm start"
   },
@@ -32,6 +32,7 @@
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.29.0",
     "node-sass": "^4.5.3",
+    "nodemon": "^1.11.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0",
