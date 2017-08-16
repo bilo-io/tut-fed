@@ -9,7 +9,7 @@ $dim-image: 2rem;
 $dim-font: 1.5rem;
 $dim-navbar: 4rem;
 $dim-padding: 1em;
-
+$input-height: 2em;
 // SASS: Mixins
 @mixin drop-shadow($color) {
     -webkit-box-shadow: 0px 6px 20px -5px $color;
@@ -71,4 +71,30 @@ body {
     width: 100vw;
     top: $dim-navbar;
     left: 0;
+}
+
+button {
+    height: $input-height;
+    background-color: $col-active;
+    color: white;
+    border: 1px solid $col-active;
+
+    &:hover {
+        background-color: transparent;
+        color: $col-active;
+        border: 1px solid $col-active;
+    }
+}
+
+input {
+    line-height: $input-height;
+    height: $input-height;
+    padding: {
+        left: 1em;
+        right: 1em;
+    }
+
+    &:focus {
+
+    }
 }
