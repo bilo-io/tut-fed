@@ -37,7 +37,7 @@ var config = {
             }
         ])
     ],
-
+    devtool: 'source-maps',
     devServer: {
         historyApiFallback: true,
         stats: 'minimal'
